@@ -1,8 +1,8 @@
-import { baseURL, discogsURL } from '../config/urls';
+import { baseURL } from '../config/urls';
 import { pad } from '../services/utils';
 
 export const makeDiscogsSearchApiCall = async searchInput => {
-  const searchUrl = discogsURL + `/search/yt`;
+  const searchUrl = baseURL + `/search/yt`;
   let response = await fetch(searchUrl, {method: 'POST',
       headers: {
           'Content-Type': 'application/json'
