@@ -95,7 +95,7 @@ class SignIn extends Component {
   }
 
   handlePostGoogleSignIn = async (code) => {
-      const response = await googleSignInApi(code, 'https://backtube.app/login');
+      const response = await googleSignInApi(code, 'https://vinylscanner.netlify.app/login');
       const username = parseJwt(response['access_token'])['username']
       const sub = parseJwt(response['access_token'])['sub']
       const email = parseJwt(response['id_token'])['email']
@@ -151,7 +151,7 @@ class SignIn extends Component {
 
   handleGoogleSubmit = async (event) => {
       event.preventDefault();
-      window.location.assign(cognitoURL + '/oauth2/authorize?redirect_uri=https://backtube.app/login&response_type=code&client_id=13jgajqggg04mq38g14iv6lba5&identity_provider=Google');
+      window.location.assign(cognitoURL + '/oauth2/authorize?redirect_uri=https://vinylscanner.netlify.app/login&response_type=code&client_id=ioc356ekbu4m2u1ged1lkphld&identity_provider=Google');
   };
 
   render(){
