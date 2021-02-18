@@ -122,17 +122,8 @@ class SignIn extends Component {
       this.props.login(this.state.email, this.state.password)
       .then(res => {
         if (this.props.auth.isLoggedIn) {
-            this.props.read({
-                accessToken: this.props.auth.session.accessToken.jwtToken,
-                userSub: this.props.auth.session.accessToken.payload.sub
-            });
-            this.props.getPlaylists({
-                accessToken: this.props.auth.session.accessToken.jwtToken,
-                userSub: this.props.auth.session.accessToken.payload.sub
-            });
             MixPanel.identify(this.props.auth.session.accessToken.payload.sub);
             MixPanel.people.set({
-                $name: this.props.profile.username,
                 $email: this.state.email,
                 $distinct_id: this.props.auth.session.accessToken.payload.sub
             });

@@ -125,7 +125,7 @@ class Home extends React.Component {
         const { classes } = this.props;
         return (
             <Container maxWidth='md' className={classes.container}>
-                 <Grid spacing={5} container classes={classes.grid}>
+                 <Grid spacing={5} container className={classes.grid}>
                      <Grid item>
                         <Card className={classes.root}>
                           <CardActionArea>

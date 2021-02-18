@@ -1,7 +1,7 @@
 import { baseURL } from '../config/urls';
 
 export const helloWorld = async (token) => {
-    fetch(baseURL + '/api/helloWorld', {
+    fetch(baseURL + '/auth/helloWorld', {
       method: 'GET',
       headers: {
         'accessToken': token
