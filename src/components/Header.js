@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import UserIcon from './UserIcon';
 import logo from '../logo.png';
 
@@ -55,8 +56,13 @@ const styles = theme => ({
   searchIcon: {
       flexGrow: 0,
   },
+  divButton: {
+      marginLeft: 'auto',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center'
+  },
   accountButton: {
-    marginLeft: 'auto',
     textDecoration: 'none'
   },
   bar: {
@@ -85,16 +91,26 @@ class Header extends Component {
                           />
                       </Link>
                   </div>
-                  <div className={classes.search}>
-                </div>
+                  <div className={classes.divButton}>
+                  {this.props.isLoggedIn && <Typography variant="body2" color="textSecondary" component="p">
+                    Welcome, {this.props.email}
+                </Typography>}
                 <UserIcon
                     isLoggedIn={this.props.isLoggedIn}
                     className={classes.accountButton}
                 />
+                </div>
                 </Toolbar>
             </AppBar>
         );
     }
 }
 
-export default withRouter(withStyles(styles, { withTheme: true })(Header));
+const mapStateToProps = state => {
+  return {
+      isLoggedIn: state.auth.isLoggedIn,
+      email: state.auth.session !== null ? state.auth.session.idToken.payload.email: null,
+   }
+}
+
+export default withRouter(connect(mapStateToProps)(withStyles(styles, { withTheme: true })(Header)));

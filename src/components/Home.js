@@ -22,7 +22,7 @@ import { getSearchParam } from '../services/url';
 
 const styles = theme => ({
     root: {
-      width: 400,
+      width: 420,
       height: "100%"
     },
     media: {

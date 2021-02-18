@@ -3,8 +3,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Avatar from '@material-ui/core/Avatar';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 import { ModalLink } from "react-router-modal-gallery";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
@@ -43,23 +44,10 @@ class UserIcon extends Component {
         };
     }
 
-    handleClick = (event) => {
-      this.setState({anchorEl: event.currentTarget});
-    };
-
-    handleClose = () => {
-      this.setState({anchorEl: null});
-    };
-
-    goToProfile = () => {
-      this.setState({anchorEl: null});
-      this.props.history.push(`/profile/${this.props.userid}`);
-    };
-
     handleLogout = () => {
-      this.setState({anchorEl: null});
       this.props.logout();
     };
+
     render () {
         const { classes } = this.props;
         if (!this.props.isLoggedIn) {
@@ -77,25 +65,10 @@ class UserIcon extends Component {
             return <div className={classes.wrapper}>
             <IconButton
                 className={classes.accountIconClass}
-                onClick={this.handleClick}
+                onClick={this.handleLogout}
             >
-              <Avatar
-                alt={this.props.profile.username.toUpperCase()}
-                src={this.props.profile.avatar}
-                aria-label="open account menu"
-              >
-            </Avatar>
+              <ExitToAppIcon fontSize="large" color="secondary"/>
            </IconButton>
-              <Menu
-                id="simple-menu"
-                anchorEl={this.state.anchorEl}
-                keepMounted
-                open={Boolean(this.state.anchorEl)}
-                onClose={this.handleClose}
-              >
-                <MenuItem onClick={this.goToProfile}>Profile</MenuItem>
-                <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
-              </Menu>
           </div>
         }
     }
@@ -104,7 +77,6 @@ class UserIcon extends Component {
 function mapStateToProps(state, props) {
   return {
     profile: {username: "", avatar: "/broken-image.jpg"},
-    userid: state.auth.session !== null ? state.auth.session.accessToken.payload.sub: null,
   };
 }
 
