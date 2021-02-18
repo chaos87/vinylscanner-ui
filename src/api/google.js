@@ -4,7 +4,7 @@ import { cognitoURL } from '../config/urls';
 export const googleSignInApi = async (code, redirectUrl) => {
     const payload = {
         "grant_type": "authorization_code",
-        "client_id": "13jgajqggg04mq38g14iv6lba5",
+        "client_id": "ioc356ekbu4m2u1ged1lkphld",
         "redirect_uri": redirectUrl,
         "code": code
     }
