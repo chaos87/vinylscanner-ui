@@ -90,7 +90,8 @@ class SignIn extends Component {
   componentDidMount() {
       const code = getSearchParam(this.props.location, 'code');
       if (code) {
-          this.handlePostGoogleSignIn(code);
+          console.log(code)
+          // this.handlePostGoogleSignIn(code);
       }
   }
 
