@@ -96,11 +96,10 @@ class SignIn extends Component {
 
   handlePostGoogleSignIn = async (code) => {
       const response = await googleSignInApi(code, 'https://vinylscanner.netlify.app/login');
-      console.log(response)
-      // const username = parseJwt(response['access_token'])['username']
-      // const sub = parseJwt(response['access_token'])['sub']
-      // const email = parseJwt(response['id_token'])['email']
-      // await this.props.refreshToken(username, response['refresh_token'])
+      const username = parseJwt(response['access_token'])['username']
+      const sub = parseJwt(response['access_token'])['sub']
+      const email = parseJwt(response['id_token'])['email']
+      await this.props.refreshToken(username, response['refresh_token'])
       // MixPanel.identify(sub);
       // MixPanel.people.set({
       //     $name: username,
