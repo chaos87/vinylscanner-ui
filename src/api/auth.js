@@ -28,11 +28,9 @@ export const refresh = async (username, token) => {
       }
     })
     .then(res => {
-        console.log(res)
         return res.json();
     })
     .catch(err => {
-        console.log(err)
         return err;
     })
     return response;
