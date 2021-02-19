@@ -37,3 +37,21 @@ export const refresh = async (username, token) => {
     })
     return response;
 }
+
+export const createUserApi = async (userInfo) => {
+    let response = await fetch(baseURL + '/api/user', {
+      method: 'POST',
+      body: JSON.stringify(userInfo),
+      headers: {
+        'Content-Type': 'application/json',
+        'accessToken': userInfo.accessToken
+      }
+    })
+    .then(res => {
+        return res.json();
+    })
+    .catch(err => {
+        return err;
+    })
+    return response;
+}

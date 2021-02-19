@@ -16,7 +16,7 @@ import { withRouter } from "react-router-dom";
 import { ModalLink } from "react-router-modal-gallery";
 import { connect } from 'react-redux';
 import { registerUser } from '../actions/register';
-import { refreshAuthToken } from '../actions/auth';
+import { refreshAuthToken, createUser } from '../actions/auth';
 import { delay } from '../services/utils';
 import { MixPanel } from './MixPanel';
 import GoogleButton from 'react-google-button';
@@ -105,7 +105,13 @@ class SignUp extends Component {
         const username = parseJwt(response['access_token'])['username']
         const sub = parseJwt(response['access_token'])['sub']
         const email = parseJwt(response['id_token'])['email']
-        await this.props.refreshToken(username, response['refresh_token'])
+        await this.props.refreshToken(username, response['refresh_token']).then(res => {
+            this.props.createUser({
+                id: sub,
+                username: username,
+                accessToken: this.props.auth.session.accessToken.jwtToken,
+            })
+        })
         MixPanel.identify(sub);
         MixPanel.people.set({
             $name: username,
@@ -282,6 +288,7 @@ function mapDispatchToProps(dispatch) {
   return {
     register: (userInfo) => dispatch(registerUser(userInfo)),
     refreshToken: (username, token) => dispatch(refreshAuthToken(username, token)),
+    createUser: userInfo => dispatch(createUser(userInfo)),
   };
 }
 

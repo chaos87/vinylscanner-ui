@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import { withRouter } from "react-router-dom";
 import { ModalLink } from "react-router-modal-gallery";
 import { connect } from 'react-redux';
-import { loginUser, refreshAuthToken } from '../actions/auth';
+import { loginUser, refreshAuthToken, createUser } from '../actions/auth';
 import { withLastLocation } from 'react-router-last-location';
 import { MixPanel } from './MixPanel';
 import GoogleButton from 'react-google-button';
@@ -90,8 +90,7 @@ class SignIn extends Component {
   componentDidMount() {
       const code = getSearchParam(this.props.location, 'code');
       if (code) {
-          console.log(code)
-          // this.handlePostGoogleSignIn(code);
+          this.handlePostGoogleSignIn(code);
       }
   }
 
@@ -101,14 +100,14 @@ class SignIn extends Component {
       const sub = parseJwt(response['access_token'])['sub']
       const email = parseJwt(response['id_token'])['email']
       await this.props.refreshToken(username, response['refresh_token'])
-      // MixPanel.identify(sub);
-      // MixPanel.people.set({
-      //     $name: username,
-      //     $email: email,
-      //     $distinct_id: sub
-      // });
-      // MixPanel.track('Sign In');
-      // this.props.history.push('/');
+      MixPanel.identify(sub);
+      MixPanel.people.set({
+          $name: username,
+          $email: email,
+          $distinct_id: sub
+      });
+      MixPanel.track('Sign In');
+      this.props.history.push('/');
   }
 
   handleInputChange = (event) => {
@@ -238,6 +237,7 @@ function mapDispatchToProps(dispatch) {
   return {
     login: (username, password) => dispatch(loginUser(username, password)),
     refreshToken: (username, token) => dispatch(refreshAuthToken(username, token)),
+    createUser: userInfo => dispatch(createUser(userInfo)),
   };
 }
 

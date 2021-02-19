@@ -5,7 +5,10 @@ import {
     SET_SESSION_SUCCESS,
     REFRESH_AUTH_TOKEN_STARTED,
     REFRESH_AUTH_TOKEN_SUCCESS,
-    REFRESH_AUTH_TOKEN_FAILED
+    REFRESH_AUTH_TOKEN_FAILED,
+    USER_CREATE_FAILED,
+    USER_CREATE_STARTED,
+    USER_CREATE_SUCCESS
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -57,6 +60,20 @@ const authReducer = (state = initialState, action) => {
         isLoggedIn: false,
         error: action.payload.error
     }
+    case USER_CREATE_STARTED:
+      return {
+          ...state,
+          error: null
+      }
+    case USER_CREATE_SUCCESS:
+      return {
+          ...state,
+      }
+    case USER_CREATE_FAILED:
+      return {
+        ...state,
+        error: action.payload.error,
+      }
     case CLEAR_SESSION:
       return initialState
 

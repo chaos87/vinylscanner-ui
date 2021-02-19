@@ -7,8 +7,11 @@ import {
     REFRESH_AUTH_TOKEN_STARTED,
     REFRESH_AUTH_TOKEN_SUCCESS,
     REFRESH_AUTH_TOKEN_FAILED,
+    USER_CREATE_SUCCESS,
+    USER_CREATE_STARTED,
+    USER_CREATE_FAILED,
 } from '../constants/actionTypes'
-import { login, refresh } from '../api/auth';
+import { login, refresh, createUserApi } from '../api/auth';
 import { MixPanel } from '../components/MixPanel';
 
 export function clearSession() {
@@ -94,4 +97,33 @@ const refreshAuthTokenFailed = error => ({
 
 export const checkAuth = () => ({
   type: CHECK_AUTH_TOKEN
+});
+
+export function createUser(userInfo) {
+  return function(dispatch) {
+    dispatch(createUserStarted())
+    return createUserApi(userInfo)
+      .then(data => {
+          dispatch(createUserSuccess(data));
+      })
+      .catch(err => {
+          dispatch(createUserFailed(err.message));
+      });
+  }
+}
+
+const createUserSuccess = (data) => ({
+  type: USER_CREATE_SUCCESS,
+  payload: data
+});
+
+const createUserStarted = () => ({
+  type: USER_CREATE_STARTED
+});
+
+const createUserFailed = error => ({
+  type: USER_CREATE_FAILED,
+  payload: {
+    error
+  }
 });
